@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.reggie.mapper.DishMapper">
+
+
+    <resultMap id="DishWithFlavorMap" type="com.itheima.reggie.entity.DishDto">
+        <id property="id" column="id"></id>
+        <result property="categoryId" column="category_id"></result>
+        <result property="name" column="name"></result>
+        <result property="price" column="price"></result>
+        <result property="code" column="code"></result>
+        <result property="image" column="image"></result>
+        <result property="description" column="description"></result>
+        <result property="status" column="status"></result>
+        <result property="sort" column="sort"></result>
+        <result property="createTime" column="createTime"></result>
+        <result property="updateTime" column="updateTime"></result>
+        <result property="createUser" column="createUser"></result>
+        <result property="updateUser" column="updateUser"></result>
+        <result property="isDeleted" column="isDeleted"></result>
+        <collection property="flavors" ofType="com.itheima.reggie.entity.DishFlavor">
+            <result property="id" column="flavor_id"/>
+            <result property="dishId" column="flavor_dish_id"/>
+            <result property="name" column="flavor_name"/>
+            <result property="value" column="flavor_value"/>
+            <result property="createTime" column="flavor_create_time"/>
+            <result property="updateTime" column="flavor_update_time"/>
+            <result property="createUser" column="flavor_create_user"/>
+            <result property="updateUser" column="flavor_update_user"/>
+            <result property="isDeleted" column="flavor_is_deleted"/>
+        </collection>
+    </resultMap>
+    <select id="listDishWithFlavor" resultMap="DishWithFlavorMap">
+        SELECT
+        d.id AS id,                      <!-- 给 dish 表的 id 字段加别名 -->
+        d.name AS name,
+        d.category_id AS category_id,    <!-- 给 category_id 加别名 -->
+        d.price AS price,                <!-- 给 price 加别名 -->
+        d.code AS code,                  <!-- 给 code 加别名 -->
+        d.image AS image,                <!-- 给 image 加别名 -->
+        d.description AS description,    <!-- 给 description 加别名 -->
+        d.status AS status,              <!-- 给 status 加别名 -->
+        d.sort AS sort,                  <!-- 给 sort 加别名 -->
+        d.create_time AS createTime,      <!-- 给 createTime 加别名 -->
+        d.update_time AS updateTime,      <!-- 给 updateTime 加别名 -->
+        d.create_user AS createUser,      <!-- 给 createUser 加别名 -->
+        d.update_user AS updateUser,      <!-- 给 updateUser 加别名 -->
+        d.is_deleted AS isDeleted,        <!-- 给 isDeleted 加别名 -->
+        df.id AS flavor_id,              <!-- 给 dish_flavor 表的 id 字段加别名 -->
+        df.dish_id AS flavor_dish_id,    <!-- 给 dish_id 加别名 -->
+        df.name AS flavor_name,          <!-- 给 name 加别名 -->
+        df.value AS flavor_value,        <!-- 给 value 加别名 -->
+        df.create_time AS flavor_create_time,  <!-- 给 createTime 加别名 -->
+        df.update_time AS flavor_update_time,  <!-- 给 updateTime 加别名 -->
+        df.create_user AS flavor_create_user,  <!-- 给 createUser 加别名 -->
+        df.update_user AS flavor_update_user,  <!-- 给 updateUser 加别名 -->
+        df.is_deleted AS flavor_is_deleted  <!-- 给 isDeleted 加别名 -->
+        FROM
+        dish d
+        LEFT JOIN
+        dish_flavor df ON df.dish_id = d.id
+        WHERE
+        d.category_id = #{cid};
+    </select>
+
+
+
+</mapper>
