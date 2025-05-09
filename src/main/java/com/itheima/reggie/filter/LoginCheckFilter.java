@@ -29,7 +29,19 @@ public class LoginCheckFilter implements Filter {
                 "/backend/**",
                 "/front/**",
                 "/user/login",
-                "/user/sendMsg"
+                "/user/sendMsg",
+                "/swagger-ui/index.html",
+                "/swagger-ui.html",
+                "/v3/api-docs",
+                "/swagger-ui/*",
+                "/webjars/springfox-swagger-ui/**",
+                "/swagger-ui.html",                         // springfox
+                "/swagger-ui/**",                           // springdoc
+                "/v2/api-docs",                             // springfox
+                "/v3/api-docs",                             // springdoc
+                "/swagger-resources/**",                    // 静态资源配置
+                "/webjars/**",                              // 静态资源配置
+                "/doc.html"
         };
 
         boolean check = check(urls, request.getRequestURI());
